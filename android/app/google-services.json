@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "343464164746",
+    "project_id": "t9-kho-59krd5",
+    "storage_bucket": "t9-kho-59krd5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343464164746:android:592d5845c3cb8b0cfbdc73",
+        "android_client_info": {
+          "package_name": "com.t9.kho"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDNO7IAoRVlHomIwO943ElJbNzdw3sFc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
