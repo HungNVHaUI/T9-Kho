@@ -6,3 +6,4 @@ export '/user/create_account/create_account_widget.dart'
 export '/user/loginpage/loginpage_widget.dart' show LoginpageWidget;
 export '/product/product_widget.dart' show ProductWidget;
 export '/add_product/add_product_widget.dart' show AddProductWidget;
+export '/add_new_product/add_new_product_widget.dart' show AddNewProductWidget;

@@ -1,31 +1,32 @@
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'add_product_model.dart';
-export 'add_product_model.dart';
+import 'add_new_product_model.dart';
+export 'add_new_product_model.dart';
 
-class AddProductWidget extends StatefulWidget {
-  const AddProductWidget({super.key});
+class AddNewProductWidget extends StatefulWidget {
+  const AddNewProductWidget({super.key});
 
   @override
-  State<AddProductWidget> createState() => _AddProductWidgetState();
+  State<AddNewProductWidget> createState() => _AddNewProductWidgetState();
 }
 
-class _AddProductWidgetState extends State<AddProductWidget> {
-  late AddProductModel _model;
+class _AddNewProductWidgetState extends State<AddNewProductWidget> {
+  late AddNewProductModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AddProductModel());
+    _model = createModel(context, () => AddNewProductModel());
+
+    _model.categoriesTextController ??= TextEditingController();
+    _model.categoriesFocusNode ??= FocusNode();
 
     _model.nameAddProductTextController ??= TextEditingController();
     _model.nameAddProductFocusNode ??= FocusNode();
@@ -128,152 +129,88 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          StreamBuilder<List<ProductRecord>>(
-                            stream: queryProductRecord(),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).primary,
+                          Container(
+                            width: double.infinity,
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0),
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                width: 1.0,
+                              ),
+                            ),
+                            child: Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: _model.categoriesTextController,
+                                  focusNode: _model.categoriesFocusNode,
+                                  autofocus: false,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintText: 'Dòng sản phẩm',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
                                       ),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
                                   ),
-                                );
-                              }
-                              List<ProductRecord>
-                                  categoryAddProductProductRecordList =
-                                  snapshot.data!;
-
-                              return Container(
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  border: Border.all(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    width: 1.0,
-                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  cursorColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  validator: _model
+                                      .categoriesTextControllerValidator
+                                      .asValidator(context),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      3.0, 0.0, 3.0, 0.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Align(
-                                        alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
-                                        child: Text(
-                                          'Category: ',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: 44.0,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(0.0),
-                                            border: Border.all(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBackground,
-                                              width: 0.0,
-                                            ),
-                                          ),
-                                          child: Align(
-                                            alignment:
-                                                const AlignmentDirectional(0.0, 0.0),
-                                            child: FlutterFlowDropDown<String>(
-                                              controller: _model
-                                                      .categoryAddProductValueController ??=
-                                                  FormFieldController<String>(
-                                                      null),
-                                              options:
-                                                  categoryAddProductProductRecordList
-                                                      .map((e) => e.description)
-                                                      .toList(),
-                                              onChanged: (val) => safeSetState(
-                                                  () => _model
-                                                          .categoryAddProductValue =
-                                                      val),
-                                              width: double.infinity,
-                                              height: 40.0,
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              hintText: 'Select...',
-                                              icon: Icon(
-                                                Icons
-                                                    .keyboard_arrow_down_rounded,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                size: 24.0,
-                                              ),
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBackground,
-                                              elevation: 2.0,
-                                              borderColor: Colors.transparent,
-                                              borderWidth: 0.0,
-                                              borderRadius: 8.0,
-                                              margin: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 0.0, 12.0, 0.0),
-                                              hidesUnderline: true,
-                                              isOverButton: false,
-                                              isSearchable: false,
-                                              isMultiSelect: false,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
-                                        child: InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            context.pushNamed('addNewProduct');
-                                          },
-                                          child: Icon(
-                                            Icons.add_sharp,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 24.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
+                              ),
+                            ),
                           ),
                           Container(
                             width: double.infinity,
@@ -904,7 +841,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                                 _model.descriptionAddProductTextController.text,
                             imageUrl: _model.uploadedFileUrl,
                             brand: _model.brandAddProductTextController.text,
-                            category: _model.categoryAddProductValue,
+                            category: _model.categoriesTextController.text,
                             stock: int.tryParse(
                                 _model.stockAddProductTextController.text),
                             partNumber:

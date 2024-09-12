@@ -109,6 +109,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'addProduct',
           path: '/addProduct',
           builder: (context, params) => const AddProductWidget(),
+        ),
+        FFRoute(
+          name: 'addNewProduct',
+          path: '/addNewProduct',
+          builder: (context, params) => const AddNewProductWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -33,4 +33,10 @@ class FFAppState extends ChangeNotifier {
   set product(DocumentReference? value) {
     _product = value;
   }
+
+  String _imageURLAddProduct = '';
+  String get imageURLAddProduct => _imageURLAddProduct;
+  set imageURLAddProduct(String value) {
+    _imageURLAddProduct = value;
+  }
 }

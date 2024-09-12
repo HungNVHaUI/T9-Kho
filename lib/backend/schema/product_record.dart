@@ -55,6 +55,11 @@ class ProductRecord extends FirestoreRecord {
   String get partNumber => _partNumber ?? '';
   bool hasPartNumber() => _partNumber != null;
 
+  // "time" field.
+  DateTime? _time;
+  DateTime? get time => _time;
+  bool hasTime() => _time != null;
+
   void _initializeFields() {
     _price = castToType<double>(snapshotData['price']);
     _name = snapshotData['name'] as String?;
@@ -64,6 +69,7 @@ class ProductRecord extends FirestoreRecord {
     _category = snapshotData['category'] as String?;
     _stock = castToType<int>(snapshotData['stock']);
     _partNumber = snapshotData['part_number'] as String?;
+    _time = snapshotData['time'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -109,6 +115,7 @@ Map<String, dynamic> createProductRecordData({
   String? category,
   int? stock,
   String? partNumber,
+  DateTime? time,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -120,6 +127,7 @@ Map<String, dynamic> createProductRecordData({
       'category': category,
       'stock': stock,
       'part_number': partNumber,
+      'time': time,
     }.withoutNulls,
   );
 
@@ -138,7 +146,8 @@ class ProductRecordDocumentEquality implements Equality<ProductRecord> {
         e1?.brand == e2?.brand &&
         e1?.category == e2?.category &&
         e1?.stock == e2?.stock &&
-        e1?.partNumber == e2?.partNumber;
+        e1?.partNumber == e2?.partNumber &&
+        e1?.time == e2?.time;
   }
 
   @override
@@ -150,7 +159,8 @@ class ProductRecordDocumentEquality implements Equality<ProductRecord> {
         e?.brand,
         e?.category,
         e?.stock,
-        e?.partNumber
+        e?.partNumber,
+        e?.time
       ]);
 
   @override

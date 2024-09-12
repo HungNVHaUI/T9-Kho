@@ -1,21 +1,16 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
-import 'add_product_widget.dart' show AddProductWidget;
+import 'add_new_product_widget.dart' show AddNewProductWidget;
 import 'package:flutter/material.dart';
 
-class AddProductModel extends FlutterFlowModel<AddProductWidget> {
+class AddNewProductModel extends FlutterFlowModel<AddNewProductWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // State field(s) for categoryAddProduct widget.
-  String? categoryAddProductValue;
-  FormFieldController<String>? categoryAddProductValueController;
-  // State field(s) for nameAddProduct widget.
-  FocusNode? nameAddProductFocusNode;
-  TextEditingController? nameAddProductTextController;
-  String? Function(BuildContext, String?)?
-      nameAddProductTextControllerValidator;
-  String? _nameAddProductTextControllerValidator(
+  // State field(s) for categories widget.
+  FocusNode? categoriesFocusNode;
+  TextEditingController? categoriesTextController;
+  String? Function(BuildContext, String?)? categoriesTextControllerValidator;
+  String? _categoriesTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Field is required';
@@ -24,6 +19,11 @@ class AddProductModel extends FlutterFlowModel<AddProductWidget> {
     return null;
   }
 
+  // State field(s) for nameAddProduct widget.
+  FocusNode? nameAddProductFocusNode;
+  TextEditingController? nameAddProductTextController;
+  String? Function(BuildContext, String?)?
+      nameAddProductTextControllerValidator;
   // State field(s) for brandAddProduct widget.
   FocusNode? brandAddProductFocusNode;
   TextEditingController? brandAddProductTextController;
@@ -101,8 +101,7 @@ class AddProductModel extends FlutterFlowModel<AddProductWidget> {
 
   @override
   void initState(BuildContext context) {
-    nameAddProductTextControllerValidator =
-        _nameAddProductTextControllerValidator;
+    categoriesTextControllerValidator = _categoriesTextControllerValidator;
     brandAddProductTextControllerValidator =
         _brandAddProductTextControllerValidator;
     partnumberAddProductTextControllerValidator =
@@ -117,6 +116,9 @@ class AddProductModel extends FlutterFlowModel<AddProductWidget> {
 
   @override
   void dispose() {
+    categoriesFocusNode?.dispose();
+    categoriesTextController?.dispose();
+
     nameAddProductFocusNode?.dispose();
     nameAddProductTextController?.dispose();
 

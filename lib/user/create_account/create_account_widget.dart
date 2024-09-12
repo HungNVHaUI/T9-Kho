@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'create_account_model.dart';
 export 'create_account_model.dart';
 
@@ -20,22 +19,11 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
   late CreateAccountModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => CreateAccountModel());
-
-    if (!isWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        safeSetState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
 
     _model.displayNameSignupTextController ??= TextEditingController();
     _model.displayNameSignupFocusNode ??= FocusNode();
@@ -53,9 +41,6 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
   void dispose() {
     _model.dispose();
 
-    if (!isWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -109,7 +94,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
                       child: SingleChildScrollView(
                         child: Column(
-                          mainAxisSize: MainAxisSize.max,
+                          mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
@@ -466,62 +451,58 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                       ),
                     ),
                   ),
-                  if (!(isWeb
-                      ? MediaQuery.viewInsetsOf(context).bottom > 0
-                      : _isKeyboardVisible))
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          16.0, 12.0, 16.0, 24.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          GoRouter.of(context).prepareAuthEvent();
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 24.0),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        GoRouter.of(context).prepareAuthEvent();
 
-                          final user = await authManager.createAccountWithEmail(
-                            context,
-                            _model.emailSignupTextController.text,
-                            _model.passSignupTextController.text,
-                          );
-                          if (user == null) {
-                            return;
-                          }
+                        final user = await authManager.createAccountWithEmail(
+                          context,
+                          _model.emailSignupTextController.text,
+                          _model.passSignupTextController.text,
+                        );
+                        if (user == null) {
+                          return;
+                        }
 
-                          await UsersRecord.collection
-                              .doc(user.uid)
-                              .update(createUsersRecordData(
-                                displayName:
-                                    _model.displayNameSignupTextController.text,
-                              ));
+                        await UsersRecord.collection
+                            .doc(user.uid)
+                            .update(createUsersRecordData(
+                              displayName:
+                                  _model.displayNameSignupTextController.text,
+                            ));
 
-                          context.pushNamedAuth('loginpage', context.mounted);
-                        },
-                        text: 'Create Account',
-                        options: FFButtonOptions(
-                          width: double.infinity,
-                          height: 60.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          textStyle: FlutterFlowTheme.of(context)
-                              .titleMedium
-                              .override(
-                                fontFamily: 'Inter Tight',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 23.0,
-                                letterSpacing: 0.0,
-                              ),
-                          elevation: 4.0,
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).secondary,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(12.0),
-                          hoverColor: FlutterFlowTheme.of(context).primaryText,
+                        context.pushNamedAuth('loginpage', context.mounted);
+                      },
+                      text: 'Create Account',
+                      options: FFButtonOptions(
+                        width: double.infinity,
+                        height: 60.0,
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .titleMedium
+                            .override(
+                              fontFamily: 'Inter Tight',
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              fontSize: 23.0,
+                              letterSpacing: 0.0,
+                            ),
+                        elevation: 4.0,
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).secondary,
+                          width: 2.0,
                         ),
+                        borderRadius: BorderRadius.circular(12.0),
+                        hoverColor: FlutterFlowTheme.of(context).primaryText,
                       ),
                     ),
+                  ),
                 ],
               ),
             ),
