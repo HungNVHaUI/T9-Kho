@@ -72,23 +72,43 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const HomeWidget() : const SflashWidget(),
+          appStateNotifier.loggedIn ? const HomeWidget() : const SplashWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const HomeWidget() : const SflashWidget(),
-        ),
-        FFRoute(
-          name: 'sflash',
-          path: '/sflash',
-          builder: (context, params) => const SflashWidget(),
+              appStateNotifier.loggedIn ? const HomeWidget() : const SplashWidget(),
         ),
         FFRoute(
           name: 'home',
           path: '/home',
           builder: (context, params) => const HomeWidget(),
+        ),
+        FFRoute(
+          name: 'splash',
+          path: '/splash',
+          builder: (context, params) => const SplashWidget(),
+        ),
+        FFRoute(
+          name: 'createAccount',
+          path: '/createAccount',
+          builder: (context, params) => const CreateAccountWidget(),
+        ),
+        FFRoute(
+          name: 'loginpage',
+          path: '/loginpage',
+          builder: (context, params) => const LoginpageWidget(),
+        ),
+        FFRoute(
+          name: 'product',
+          path: '/product',
+          builder: (context, params) => const ProductWidget(),
+        ),
+        FFRoute(
+          name: 'addProduct',
+          path: '/addProduct',
+          builder: (context, params) => const AddProductWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -259,7 +279,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/sflash';
+            return '/splash';
           }
           return null;
         },

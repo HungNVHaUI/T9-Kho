@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'sflash_widget.dart' show SflashWidget;
+import 'splash_widget.dart' show SplashWidget;
 import 'package:flutter/material.dart';
 
-class SflashModel extends FlutterFlowModel<SflashWidget> {
+class SplashModel extends FlutterFlowModel<SplashWidget> {
   @override
   void initState(BuildContext context) {}
 
